@@ -1,33 +1,30 @@
-import { useState, useEffect } from "react";
-import ContactList from "./components/ContactList";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addContact,
+  deleteContact,
+  selectContacts,
+} from "./redux/contactsSlice";
+import { changeFilter, selectNameFilter } from "./redux/filtersSlice";
 import ContactForm from "./components/ContactForm";
 import SearchBox from "./components/SearchBox";
+import ContactList from "./components/ContactList";
 
 export default function App() {
-  const [contacts, setContacts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  useEffect(() => {
-    const savedContacts = JSON.parse(localStorage.getItem("contacts")) || [];
-    setContacts(savedContacts);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
+  const searchTerm = useSelector(selectNameFilter);
 
   const handleAddContact = (values) => {
     const newContact = { ...values, id: Math.random().toString() };
-    setContacts([...contacts, newContact]);
+    dispatch(addContact(newContact));
   };
 
   const handleDeleteContact = (id) => {
-    const updatedContacts = contacts.filter((contact) => contact.id !== id);
-    setContacts(updatedContacts);
+    dispatch(deleteContact(id));
   };
 
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
+    dispatch(changeFilter(event.target.value));
   };
 
   const filteredContacts = contacts.filter((contact) =>
