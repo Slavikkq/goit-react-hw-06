@@ -1,6 +1,10 @@
+import { useSelector } from "react-redux";
+import { selectContacts } from "../redux/contactsSlice";
 import Contact from "./Contact";
 
-export default function ContactList({ contacts, handleDelete }) {
+export default function ContactList({ handleDelete }) {
+  const contacts = useSelector(selectContacts);
+
   return (
     <ul>
       {contacts.map((contact) => (

@@ -1,8 +1,12 @@
-export default function Contact({ contact, handleDelete }) {
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../redux/contactsSlice";
+
+export default function Contact({ contact }) {
   const { id, name, number } = contact;
+  const dispatch = useDispatch();
 
   const onDelete = () => {
-    handleDelete(id);
+    dispatch(deleteContact(id));
   };
 
   return (
