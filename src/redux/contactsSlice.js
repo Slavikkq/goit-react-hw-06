@@ -15,16 +15,14 @@ const contactsSlice = createSlice({
         (contact) => contact.id !== action.payload
       );
     },
-    searchContacts(state, action) {
-      const searchTerm = action.payload.toLowerCase();
-      state.searchResults = state.items.filter((contact) =>
-        contact.name.toLowerCase().includes(searchTerm)
-      );
+
+    setSearchResults(state, action) {
+      state.searchResults = action.payload;
     },
   },
 });
 
-export const { addContact, deleteContact, searchContacts } =
+export const { addContact, deleteContact, setSearchResults } =
   contactsSlice.actions;
 
 export const selectContacts = (state) => state.contacts.items;
