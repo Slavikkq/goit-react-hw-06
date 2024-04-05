@@ -1,20 +1,23 @@
-import { useDispatch } from "react-redux";
-import { setSearchResults } from "../redux/contactsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchTerm } from "../redux/filtersSlice";
+import { selectSearchTerm } from "../redux/filtersSlice";
 
 export default function SearchBox() {
   const dispatch = useDispatch();
+  const searchTerm = useSelector(selectSearchTerm);
 
   const handleChange = (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    dispatch(setSearchResults(searchTerm));
+    const term = e.target.value;
+    dispatch(setSearchTerm(term));
   };
 
   return (
     <div>
       <input
         type="text"
-        placeholder="Search contacts"
+        value={searchTerm}
         onChange={handleChange}
+        placeholder="Search..."
       />
     </div>
   );

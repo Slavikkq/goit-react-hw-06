@@ -3,9 +3,11 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { addContact } from "../redux/contactsSlice";
 
+const phoneRegExp = /^\d{10}$/;
+
 export default function ContactForm() {
-  const phoneRegExp = /^\d{10}$/;
   const dispatch = useDispatch();
+
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Required"),
     number: Yup.string()
