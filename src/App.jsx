@@ -11,7 +11,7 @@ import ContactList from "./components/ContactList";
 
 export default function App() {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
+  const contacts = useSelector(selectContacts) || []; // забезпечення порожнього масиву, якщо контакти невизначені
   const searchTerm = useSelector(selectNameFilter);
 
   const handleAddContact = (values) => {
