@@ -2,6 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { addContact } from "../redux/contactsSlice";
+import { v4 as uuidv4 } from "uuid";
 
 const phoneRegExp = /^\d{10}$/;
 
@@ -16,7 +17,11 @@ export default function ContactForm() {
   });
 
   const handleSubmit = (values, { resetForm }) => {
-    dispatch(addContact(values));
+    const newContact = {
+      id: uuidv4(),
+      ...values,
+    };
+    dispatch(addContact(newContact));
     resetForm();
   };
 

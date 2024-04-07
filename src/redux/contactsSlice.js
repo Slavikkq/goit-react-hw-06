@@ -9,7 +9,11 @@ const contactsSlice = createSlice({
   initialState,
   reducers: {
     addContact(state, action) {
-      state.contacts.push(action.payload);
+      if (Array.isArray(state.contacts)) {
+        state.contacts.push(action.payload);
+      } else {
+        state.contacts = [action.payload];
+      }
     },
     deleteContact(state, action) {
       state.contacts = state.contacts.filter(
@@ -21,6 +25,13 @@ const contactsSlice = createSlice({
 
 export const { addContact, deleteContact } = contactsSlice.actions;
 
-export const selectContacts = (state) => state.contacts.contacts;
+export const selectContacts = (state, filter = "") => {
+  if (!filter) {
+    return state.contacts.contacts;
+  }
+  return state.contacts.contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+};
 
 export default contactsSlice.reducer;
